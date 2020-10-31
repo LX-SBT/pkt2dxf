@@ -2,23 +2,20 @@ main
 
 sub main
 	if Wscript.Arguments.Count = 0 then 'if no argument is passed
-		MsgBox "Drag one or more PKT file(s) onto the script." & vbLf & 
-		"A DXF file will be created." & vbLf & 
-		"The PKT file remains unchanged." & vbLf & 
-		"The source path is the same as the target path."
+		MsgBox "Drag one or more PKT file(s) onto the script." & vbLf & "A DXF file will be created." & vbLf & "The PKT file remains unchanged." & vbLf & "The source path is the same as the target path."
 		exit sub
 	end if
 	
 	For Each Argument in Wscript.Arguments
 		'determine file extension of the arguments
-		ext = Mid(Argument, InstrRev(Argument, "-")+1, Len(Argument))
+		ext = Mid(Argument, InstrRev(Argument, ".")+1, Len(Argument))
 		
 		'determine source path
 		source_path = Mid(Argument, 1, InStrRev(Argument, "\"))
 		
 		if ext <> "pkt" AND ext <> "PKT" Then
 			MsgBox """" & Argument & """ is not a PKT file"""
-			GOTO EOL 'exit sub 'next Argument
+			exit sub
 		end if
 		
 		export_name = Mid(Argument, InStrRev(Argument, "\") + 1, Len(Argument))
@@ -91,7 +88,7 @@ sub main
 			x2 = ""
 			y2 = ""
 			
-			items = Split(ln, seperator
+			items = Split(ln, seperator)
 			x2 = items(0) 'first value in items
 			y2 = items(UBound(items)) 'last value in items
 			
@@ -113,6 +110,5 @@ sub main
 		export_file.Close
 		
 		ln = ""
-	EOL:
-	Next Argument
+	Next
 end sub
